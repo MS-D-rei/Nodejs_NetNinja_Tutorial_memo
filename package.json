@@ -1,0 +1,29 @@
+{
+  "name": "nodejs-netninja-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "nodemon": "nodemon",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MS-D-rei/Nodejs_NetNinja_Tutorial_memo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MS-D-rei/Nodejs_NetNinja_Tutorial_memo/issues"
+  },
+  "homepage": "https://github.com/MS-D-rei/Nodejs_NetNinja_Tutorial_memo#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}

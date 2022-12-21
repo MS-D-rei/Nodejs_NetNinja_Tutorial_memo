@@ -1,5 +1,6 @@
 const http = require("http");
 const fs = require("fs");
+const _ = require("lodash");
 
 const hostname = "localhost";
 const port = 3000;
@@ -16,7 +17,7 @@ const server = http.createServer((req, res) => {
   // res.write('<p>Hello again</p>');
   // res.end();
 
-  let path = "../../views/";
+  let path = "./views/";
   switch (req.url) {
     case "/":
       path += "index.html";
@@ -27,7 +28,7 @@ const server = http.createServer((req, res) => {
       res.statusCode = 200;
       break;
     case "/about-us":
-      res.setHeader('Location', '/about');
+      res.setHeader("Location", "/about");
       res.statusCode = 301;
       res.end();
       break;
