@@ -28,7 +28,9 @@ app.set("view engine", "ejs");
 /* specify the views directory */
 app.set("views", "./views");
 /* specify the directory for static files. ex. image */
-app.set(express.static("public"));
+app.use(express.static("public"));
+/* to get req.body */
+app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   console.log("new request mode");
@@ -49,23 +51,6 @@ app.get("/", (req, res) => {
   res.redirect("/blogs");
 });
 
-// app.get("/add-blog", (req, res) => {
-//   const blog = new Blog({
-//     title: "new blog",
-//     snippet: "about my new blog",
-//     body: "body example",
-//   });
-
-//   blog
-//     .save()
-//     .then((result) => {
-//       res.send(result);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// });
-
 app.get("/about", (req, res) => {
   // res.sendFile("./views/about.html", { root: __dirname });
   res.render("about", { title: "About" });
@@ -77,6 +62,17 @@ app.get("/blogs", (req, res) => {
     .then((result) => {
       res.render("index", { title: "All blogs", blogs: result });
     })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.post("/blogs", (req, res) => {
+  // console.log(req.body); // { title: 'blog 2', snippet: 'snippet 2', body: 'content 2' }
+  const blog = new Blog(req.body);
+  blog
+    .save()
+    .then((result) => res.redirect("/blogs"))
     .catch((err) => {
       console.log(err);
     });
