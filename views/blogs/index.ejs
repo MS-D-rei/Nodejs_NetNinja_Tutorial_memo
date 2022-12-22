@@ -1,11 +1,11 @@
 <html lang="en">
-  <%- include("./partials/head.ejs") %>
+  <%- include("../partials/head.ejs") %>
 
   <body>
     <!-- relative path -->
     <!-- '=' equal sign escapes special character and output as string value, not html -->
     <!-- '-' minus sign is required to output include file -->
-    <%- include("./partials/nav.ejs") %>
+    <%- include("../partials/nav.ejs") %>
 
     <div class="blogs content">
       <h2>All Blogs</h2>
@@ -17,7 +17,7 @@
       </a>
       <% })} else { %>
       <p>There are no blogs to display...</p>
-      <% } %> <%- include("./partials/footer.ejs") %>
+      <% } %> <%- include("../partials/footer.ejs") %>
     </div>
   </body>
 </html>
