@@ -1,3 +1,4 @@
+const { json } = require("express");
 const express = require("express");
 
 /* create express app */
@@ -16,30 +17,16 @@ app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
+app.use((req, res, next) => {
+  console.log("new request mode");
+  console.log(`host: ${req.hostname}`);
+  console.log(`path: ${req.path}`);
+  console.log(`method: ${req.method}`);
+  next();
+});
+
 /* mock data */
-const blogs = [
-  {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-  {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-];
+const blogs = require("./docs/blogs.json");
 
 app.get("/", (req, res) => {
   // res.status(200).send('<p>Hello world from express</p>');
