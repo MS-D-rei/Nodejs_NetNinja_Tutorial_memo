@@ -1,5 +1,7 @@
 const { json } = require("express");
 const express = require("express");
+const mongoose = require("mongoose");
+const Blog = require("./models/Blog");
 
 /* create express app */
 const app = express();
@@ -7,15 +9,26 @@ const app = express();
 const hostname = "localhost";
 const port = 3000;
 
+/* connect mongoDB with mongoose */
+const mongoDBUrl = require("./mongoDB");
+mongoose.set("strictQuery", false);
+mongoose
+  .connect(mongoDBUrl)
+  .then((result) => {
+    console.log("mongoDB connected");
+    /* listen http request */
+    app.listen(port, hostname, () => {
+      console.log(`Example app listening on port ${port}`);
+    });
+  })
+  .catch((err) => console.log(err));
+
 /* register view engine */
 app.set("view engine", "ejs");
 /* specify the views directory */
 app.set("views", "./views");
-
-/* listen http request */
-app.listen(port, hostname, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+/* specify the directory for static files. ex. image */
+app.set(express.static("public"));
 
 app.use((req, res, next) => {
   console.log("new request mode");
@@ -32,12 +45,41 @@ app.get("/", (req, res) => {
   // res.status(200).send('<p>Hello world from express</p>');
   /* path must be absolute or specify root to res.sendFile */
   // res.sendFile("./views/index.html", { root: __dirname });
-  res.render("index", { title: "Home", blogs });
+  // res.render("index", { title: "Home", blogs });
+  res.redirect("/blogs");
 });
+
+// app.get("/add-blog", (req, res) => {
+//   const blog = new Blog({
+//     title: "new blog",
+//     snippet: "about my new blog",
+//     body: "body example",
+//   });
+
+//   blog
+//     .save()
+//     .then((result) => {
+//       res.send(result);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// });
 
 app.get("/about", (req, res) => {
   // res.sendFile("./views/about.html", { root: __dirname });
   res.render("about", { title: "About" });
+});
+
+app.get("/blogs", (req, res) => {
+  Blog.find()
+    .sort({ createAt: -1 })
+    .then((result) => {
+      res.render("index", { title: "All blogs", blogs: result });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.get("/blogs/create", (req, res) => {
