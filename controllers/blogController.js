@@ -15,6 +15,7 @@ const blog_details = async (req, res) => {
     res.render("./blogs/details", { title: "Blog Details", blog });
   } catch (err) {
     console.log(err);
+    res.status(404).render("404", { title: "Blog not found" });
   }
 };
 
@@ -46,11 +47,11 @@ const blog_delete = async (req, res) => {
       updatedAt: 2022-12-22T08:52:40.516Z,
       __v: 0
     }*/
-    res.json({redirect: "/blogs"});
+    res.json({ redirect: "/blogs" });
   } catch (err) {
     console.log(err);
   }
-}
+};
 
 module.exports = {
   blog_index,
